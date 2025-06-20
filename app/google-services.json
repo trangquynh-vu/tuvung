@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "810308257507",
+    "firebase_url": "https://tuvung-e1e5d-default-rtdb.firebaseio.com",
+    "project_id": "tuvung-e1e5d",
+    "storage_bucket": "tuvung-e1e5d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810308257507:android:1610d7f82be2fbb5a067d6",
+        "android_client_info": {
+          "package_name": "vn.edu.tlu.btln9.tuvung"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAmDYhYgl4dgdAZBUQ8v05O054PBsL_bA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810308257507:android:1660985cc47c1c8ba067d6",
+        "android_client_info": {
+          "package_name": "vn.edu.tlu.btln9.voca"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAmDYhYgl4dgdAZBUQ8v05O054PBsL_bA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
