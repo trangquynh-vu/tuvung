@@ -1,0 +1,103 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_light"
+    android:padding="24dp"
+    android:descendantFocusability="afterDescendants"
+    android:focusableInTouchMode="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:descendantFocusability="afterDescendants"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <!-- Chủ đề -->
+        <TextView
+            android:id="@+id/tvTopic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📚 Chủ đề: Daily"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Từ vựng -->
+        <TextView
+            android:id="@+id/tvWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wake up"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Phiên âm -->
+        <TextView
+            android:id="@+id/tvPronounce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/ˈweɪk ʌp/"
+            android:textSize="20sp"
+            android:textColor="@color/gray_dark"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Nghĩa -->
+        <TextView
+            android:id="@+id/tvMeaning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📝 Nghĩa: Thức dậy"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Ví dụ -->
+        <TextView
+            android:id="@+id/tvExample"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="💬 Ví dụ: I wake up at 6 AM every day."
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="28dp"
+            android:lineSpacingExtra="4dp" />
+
+        <!-- Nút phát âm -->
+        <Button
+            android:id="@+id/btnSpeak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🔊 Phát âm"
+            android:backgroundTint="@color/button_yellow_light"
+            android:textColor="@color/black"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Nút từ tiếp theo -->
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="➡️ Từ tiếp theo"
+            android:backgroundTint="@color/button_yellow_light"
+            android:textColor="@color/black"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <!-- Progress -->
+        <TextView
+            android:id="@+id/tvProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Từ 1 / 15"
+            android:textSize="14sp"
+            android:textColor="@color/gray_dark"
+            android:layout_marginTop="24dp"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+</ScrollView>

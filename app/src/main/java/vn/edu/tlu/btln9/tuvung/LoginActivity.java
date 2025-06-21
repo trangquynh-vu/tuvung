@@ -1,9 +1,9 @@
 package vn.edu.tlu.btln9.tuvung;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -33,22 +33,13 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         btnGoRegister = findViewById(R.id.btnGoRegister);
 
-        // Tham chiếu tới "users" trên Realtime Database
         usersRef = FirebaseDatabase.getInstance().getReference("users");
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleLogin();
-            }
-        });
+        btnLogin.setOnClickListener(v -> handleLogin());
 
-        btnGoRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-            }
-        });
+        btnGoRegister.setOnClickListener(v ->
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class))
+        );
     }
 
     private void handleLogin() {
@@ -65,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Duyệt tất cả user trong Firebase
         usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -74,25 +64,40 @@ public class LoginActivity extends AppCompatActivity {
                 for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                     String dbEmail = userSnapshot.child("email").getValue(String.class);
                     String dbPassword = userSnapshot.child("password").getValue(String.class);
+                    String role = userSnapshot.child("role").getValue(String.class);
+                    Long userId = userSnapshot.child("userId").getValue(Long.class);  // 👈 lấy userId
 
                     if (email.equals(dbEmail) && password.equals(dbPassword)) {
                         found = true;
+
+                        // ✅ Lưu vào SharedPreferences
+                        SharedPreferences prefs = getSharedPreferences("user_info", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("username", dbEmail);
+                        editor.putInt("userId", userId != null ? userId.intValue() : -1); // 👈 lưu userId
+                        editor.apply();
+
+                        Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+
+                        if ("admin".equalsIgnoreCase(role)) {
+                            startActivity(new Intent(LoginActivity.this, AdminDashboardActivity.class));
+                        } else {
+                            startActivity(new Intent(LoginActivity.this, MainUserActivity.class));
+                        }
+
+                        finish();
                         break;
                     }
                 }
 
-                if (found) {
-                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, MainUserActivity.class));
-                    finish();
-                } else {
+                if (!found) {
                     Toast.makeText(LoginActivity.this, "Sai email hoặc mật khẩu!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
-                Toast.makeText(LoginActivity.this, "Lỗi kết nối Firebase: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Lỗi Firebase: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

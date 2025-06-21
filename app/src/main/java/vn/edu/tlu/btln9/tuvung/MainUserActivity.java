@@ -26,6 +26,11 @@ public class MainUserActivity extends AppCompatActivity {
             return;
         }
 
+        // Lưu userId giả lập
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("userId", 1); // Giả lập userId = 1
+        editor.apply();
+
         // Ánh xạ các nút
         btnLearn = findViewById(R.id.btnLearn);
         btnQuiz = findViewById(R.id.btnQuiz);
@@ -48,6 +53,8 @@ public class MainUserActivity extends AppCompatActivity {
         btnProfile.setOnClickListener(v ->
                 startActivity(new Intent(this, UserProfileActivity.class)) // Chuyển đến hồ sơ
         );
+
+
 
         // Chào người dùng
         Toast.makeText(this, "Chào mừng, " + username + "!", Toast.LENGTH_SHORT).show();

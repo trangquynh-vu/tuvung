@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
+
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -29,8 +30,17 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".MainUserActivity" />
         <activity android:name=".TopicListActivity" />
+        <activity     android:name=".WordStudyActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".AdminDashboardActivity" />
+        <activity android:name=".QuizListActivity" />
+        <activity android:name=".ProgressActivity" />
 
+
+        <!-- Bổ sung các activity còn thiếu -->
+        <activity android:name=".QuizActivity" />
+        <activity android:name=".QuizResultActivity" />
+        <activity android:name=".QuizHistoryActivity" />
 
 
     </application>

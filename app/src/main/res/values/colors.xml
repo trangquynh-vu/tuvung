@@ -9,6 +9,7 @@
     <color name="edittext_bg">#FFFFFF</color>
     <color name="button_yellow_light">#FFD966</color>
     <color name="gray_dark">#666666</color>
+    <color name="bg_topic">#FFF9C4</color>
 
     <!-- Màu nút quiz (xanh dương nhạt) -->
     <color name="bg_quiz">#A0D8EF</color>
