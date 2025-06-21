@@ -1,6 +1,7 @@
 package vn.edu.tlu.btln9.tuvung;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -82,8 +83,11 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 if (found) {
+                    SharedPreferences prefs = getSharedPreferences("user_info", MODE_PRIVATE);
+                    prefs.edit().putString("username", email).apply();
+
                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    startActivity(new Intent(LoginActivity.this, MainUserActivity.class));
                     finish();
                 } else {
                     Toast.makeText(LoginActivity.this, "Sai email hoặc mật khẩu!", Toast.LENGTH_SHORT).show();

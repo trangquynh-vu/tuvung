@@ -8,4 +8,15 @@
     <color name="edittext_border">#CCCCCC</color>
     <color name="edittext_bg">#FFFFFF</color>
     <color name="button_yellow_light">#FFD966</color>
+    <color name="gray_dark">#666666</color>
+
+    <!-- Màu nút quiz (xanh dương nhạt) -->
+    <color name="bg_quiz">#A0D8EF</color>
+
+    <!-- Màu nút tiến độ (xanh lá nhạt) -->
+    <color name="bg_score">#B3E5C1</color>
+
+    <!-- Màu nút đăng xuất (đỏ) -->
+    <color name="red">#F44336</color>
+
 </resources>
