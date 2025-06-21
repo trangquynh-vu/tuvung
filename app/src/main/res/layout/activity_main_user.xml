@@ -6,6 +6,26 @@
     android:padding="24dp"
     android:background="@color/background_light">
 
+    <!-- Câu châm ngôn / lời chào -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="💡 Mỗi ngày 5 từ - Thành công sẽ đến!"
+        android:textSize="18sp"
+        android:textColor="@color/gray_dark"
+        android:layout_marginBottom="8dp"
+        android:layout_gravity="center"/>
+
+    <!-- Ảnh logo ở phía trên -->
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/logo"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="Logo 3T Learn" />
+
+    <!-- Tiêu đề -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,6 +35,7 @@
         android:textStyle="bold"
         android:layout_marginBottom="24dp"/>
 
+    <!-- Các nút chức năng -->
     <Button
         android:id="@+id/btnLearn"
         android:layout_width="match_parent"
@@ -42,11 +63,23 @@
         android:textColor="@color/black"
         android:layout_marginBottom="16dp"/>
 
+    <!-- Nút xem hồ sơ -->
     <Button
-        android:id="@+id/btnLogout"
+        android:id="@+id/btnProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="🚪 Đăng xuất"
-        android:backgroundTint="@android:color/darker_gray"
-        android:textColor="@android:color/white"/>
+        android:text="👤 Xem hồ sơ"
+        android:backgroundTint="@color/button_yellow_light"
+        android:textColor="@color/black"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Phiên bản / động viên ở cuối màn -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="📖 Học hôm nay để giỏi ngày mai "
+        android:textSize="18sp"
+        android:textColor="@color/gray_dark"
+        android:layout_marginTop="24dp"
+        android:layout_gravity="center"/>
 </LinearLayout>

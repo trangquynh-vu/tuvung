@@ -3,20 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="24dp"
     android:background="@color/background_light">
 
+    <!-- Tiêu đề -->
     <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="📚 Chọn chủ đề để học"
-        android:textSize="20sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="24dp"
+        android:layout_gravity="center_horizontal" />
 
+    <!-- Danh sách chủ đề -->
     <ListView
         android:id="@+id/lvTopics"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@color/gray_dark"
+        android:dividerHeight="1dp"
+        android:padding="8dp" />
 </LinearLayout>

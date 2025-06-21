@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainUserActivity extends AppCompatActivity {
 
-    private Button btnLearn, btnQuiz, btnProgress, btnLogout;
+    private Button btnLearn, btnQuiz, btnProgress, btnProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,34 +26,30 @@ public class MainUserActivity extends AppCompatActivity {
             return;
         }
 
-        // Ánh xạ các nút (theo đúng ID trong XML)
+        // Ánh xạ các nút
         btnLearn = findViewById(R.id.btnLearn);
         btnQuiz = findViewById(R.id.btnQuiz);
         btnProgress = findViewById(R.id.btnProgress);
-        btnLogout = findViewById(R.id.btnLogout);
+        btnProfile = findViewById(R.id.btnProfile); // Đổi từ btnLogout sang btnProfile
 
         // Sự kiện click
-        btnLearn.setOnClickListener(v -> {
-            startActivity(new Intent(this, TopicListActivity.class));
-        });
+        btnLearn.setOnClickListener(v ->
+                startActivity(new Intent(this, TopicListActivity.class))
+        );
 
-        btnQuiz.setOnClickListener(v -> {
-            startActivity(new Intent(this, QuizListActivity.class));
-        });
+        btnQuiz.setOnClickListener(v ->
+                startActivity(new Intent(this, QuizListActivity.class))
+        );
 
-        btnProgress.setOnClickListener(v -> {
-            startActivity(new Intent(this, ProgressActivity.class));
-        });
+        btnProgress.setOnClickListener(v ->
+                startActivity(new Intent(this, ProgressActivity.class))
+        );
 
-        btnLogout.setOnClickListener(v -> {
-            // Xoá SharedPreferences
-            getSharedPreferences("user_info", MODE_PRIVATE).edit().clear().apply();
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
-        });
+        btnProfile.setOnClickListener(v ->
+                startActivity(new Intent(this, UserProfileActivity.class)) // Chuyển đến hồ sơ
+        );
 
         // Chào người dùng
         Toast.makeText(this, "Chào mừng, " + username + "!", Toast.LENGTH_SHORT).show();
     }
-
 }

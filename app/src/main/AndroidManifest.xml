@@ -29,6 +29,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".MainUserActivity" />
         <activity android:name=".TopicListActivity" />
+        <activity android:name=".AdminDashboardActivity" />
+
 
 
     </application>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@color/background_light">
+
+    <!-- Tiêu đề -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="📚 Quản lý Chủ đề Từ vựng"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Nút thêm -->
+    <Button
+        android:id="@+id/btnAddTopic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="➕ Thêm chủ đề mới"
+        android:backgroundTint="@color/button_yellow_light"
+        android:textColor="@color/black"
+        android:layout_marginBottom="24dp" />
+    <Button
+        android:id="@+id/btnEditTopic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="✏️ Sửa chủ đề"
+        android:backgroundTint="@color/button_yellow_light"
+        android:textColor="@color/black"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/btnDeleteTopic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🗑️ Xóa chủ đề"
+        android:backgroundTint="@color/button_yellow_light"
+        android:textColor="@color/black"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Danh sách chủ đề -->
+    <ListView
+        android:id="@+id/lvTopics"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@color/gray_dark"
+        android:dividerHeight="1dp"
+        android:background="@android:color/white" />
+
+</LinearLayout>
