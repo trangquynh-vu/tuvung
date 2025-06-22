@@ -37,9 +37,9 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin.setOnClickListener(v -> handleLogin());
 
-        btnGoRegister.setOnClickListener(v ->
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class))
-        );
+        btnGoRegister.setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+        });
     }
 
     private void handleLogin() {
@@ -65,17 +65,17 @@ public class LoginActivity extends AppCompatActivity {
                     String dbEmail = userSnapshot.child("email").getValue(String.class);
                     String dbPassword = userSnapshot.child("password").getValue(String.class);
                     String role = userSnapshot.child("role").getValue(String.class);
-                    Long userId = userSnapshot.child("userId").getValue(Long.class);  // 👈 lấy userId
 
                     if (email.equals(dbEmail) && password.equals(dbPassword)) {
                         found = true;
 
-                        // ✅ Lưu vào SharedPreferences
+                        String userKey = userSnapshot.getKey(); // ✅ Khóa thực trong Firebase
+
                         SharedPreferences prefs = getSharedPreferences("user_info", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = prefs.edit();
-                        editor.putString("username", dbEmail);
-                        editor.putInt("userId", userId != null ? userId.intValue() : -1); // 👈 lưu userId
-                        editor.apply();
+                        prefs.edit()
+                                .putString("username", dbEmail)
+                                .putString("userKey", userKey) // ✅ lưu để truy cập sau này
+                                .apply();
 
                         Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
 

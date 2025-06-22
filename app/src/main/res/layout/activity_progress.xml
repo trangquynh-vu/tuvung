@@ -3,88 +3,80 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light"
+    android:background="@color/white"
     android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:padding="8dp">
+        android:gravity="center_horizontal">
 
-        <!-- 🎓 Tiêu đề tiến độ -->
+        <!-- Icon minh họa tiến độ -->
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/logo"
+            android:layout_marginTop="20dp"
+            android:contentDescription="Tiến độ học tập" />
+
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/tvProgressTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="🎓 Tiến độ học tập"
+            android:text="Tiến độ học tập"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginTop="16dp"
+            android:textColor="@color/black" />
 
         <!-- Chủ đề đã học -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             card_view:cardCornerRadius="16dp"
-            card_view:cardElevation="4dp"
-            android:layout_marginBottom="16dp">
+            card_view:cardElevation="6dp"
+            android:backgroundTint="@color/bg_topic">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:background="@color/bg_topic">
-
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/ic_topic" />
+                android:padding="20dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvTopicsLearned"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Chủ đề đã học: 5/10"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:layout_marginStart="12dp" />
+                    android:text="Chủ đề đã học: 0"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Quiz đã hoàn thành -->
+        <!-- Bài kiểm tra đã hoàn thành -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             card_view:cardCornerRadius="16dp"
-            card_view:cardElevation="4dp"
-            android:layout_marginBottom="16dp">
+            card_view:cardElevation="6dp"
+            android:backgroundTint="@color/bg_quiz">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:background="@color/bg_quiz">
-
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/ic_quiz" />
+                android:padding="20dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvQuizzesCompleted"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Quiz hoàn thành: 3"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:layout_marginStart="12dp" />
+                    android:text="Bài kiểm tra đã hoàn thành: 0"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -92,82 +84,83 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             card_view:cardCornerRadius="16dp"
-            card_view:cardElevation="4dp"
-            android:layout_marginBottom="24dp">
+            card_view:cardElevation="6dp"
+            android:backgroundTint="@color/bg_score">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:background="@color/bg_score">
-
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/ic_score" />
+                android:padding="20dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvAverageScore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Điểm trung bình: 8.3"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:layout_marginStart="12dp" />
+                    android:text="Điểm trung bình: 0.0"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Tiến độ tổng thể -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tiến độ tổng thể"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_marginBottom="8dp" />
-
-        <ProgressBar
-            android:id="@+id/progressBarOverall"
-            style="?android:attr/progressBarStyleHorizontal"
+        <!-- Tiến độ tổng thể + ProgressBar -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:max="100"
-            android:progress="60"
-            android:progressTint="@color/button_yellow_light"
-            android:layout_marginBottom="8dp" />
-
-        <TextView
-            android:id="@+id/tvOverallProgress"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="60% đã hoàn thành"
-            android:textSize="14sp"
-            android:textColor="#666666" />
-
-        <!-- Câu khích lệ -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="✨ Hãy tiếp tục học mỗi ngày để đạt kết quả tốt hơn!"
-            android:textColor="#666666"
-            android:textSize="14sp"
             android:layout_marginTop="16dp"
-            android:gravity="center" />
+            card_view:cardCornerRadius="16dp"
+            card_view:cardElevation="6dp">
 
-        <!-- Nút tiếp tục -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvOverallProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tiến độ tổng thể: 0%"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:max="100"
+                    android:progress="0" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Nút quay lại -->
         <Button
-            android:id="@+id/btnContinueLearning"
+            android:id="@+id/btnBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tiếp tục học"
-            android:textColor="@color/black"
+            android:text="Quay lại"
+            android:layout_marginTop="24dp"
             android:backgroundTint="@color/button_yellow_light"
-            android:layout_marginTop="16dp"
+            android:textColor="@color/black"
             android:paddingLeft="24dp"
-            android:paddingRight="24dp" />
+            android:paddingRight="24dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hãy tiếp tục học mỗi ngày để đạt được kết quả tốt hơn!"
+            android:textSize="14sp"
+            android:textColor="@color/gray_dark"
+            android:gravity="center"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="12dp" />
+
     </LinearLayout>
 </ScrollView>

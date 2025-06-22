@@ -3,8 +3,10 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
+    <!-- Tiêu đề -->
     <TextView
         android:id="@+id/tvTitle"
         android:text="📋 Quiz Topic Selection"
@@ -12,10 +14,27 @@
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="8dp" />
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="12dp" />
 
+    <!-- ✅ ListView chiếm phần còn lại của màn hình -->
     <ListView
         android:id="@+id/listViewTopics"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp" />
+
+    <!-- Nút xem lịch sử -->
+    <Button
+        android:id="@+id/btnViewHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="📜 Xem lịch sử quiz"
+        android:backgroundTint="@color/bg_quiz"
+        android:textColor="@color/black"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
+
 </LinearLayout>

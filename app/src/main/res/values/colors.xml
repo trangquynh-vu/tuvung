@@ -4,9 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background_light">#FFFFFF</color>
     <color name="button_primary">#5C4DFF</color>
-    <color name="button_text">#FFFFFF</color>
     <color name="edittext_border">#CCCCCC</color>
-    <color name="edittext_bg">#FFFFFF</color>
     <color name="button_yellow_light">#FFD966</color>
     <color name="gray_dark">#666666</color>
     <color name="bg_topic">#FFF9C4</color>

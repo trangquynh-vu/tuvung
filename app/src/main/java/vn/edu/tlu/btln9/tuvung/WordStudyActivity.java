@@ -1,5 +1,6 @@
 package vn.edu.tlu.btln9.tuvung;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.widget.Button;
@@ -27,14 +28,13 @@ public class WordStudyActivity extends AppCompatActivity {
     private int currentIndex = 0;
 
     private TextToSpeech tts;
-    private String topicId; // Dùng để lọc từ vựng theo chủ đề
+    private String topicId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_word_study);
 
-        // Nhận dữ liệu từ Intent
         topicId = getIntent().getStringExtra("topicId");
 
         // Ánh xạ view
@@ -47,22 +47,16 @@ public class WordStudyActivity extends AppCompatActivity {
         btnSpeak = findViewById(R.id.btnSpeak);
         btnNext = findViewById(R.id.btnNext);
 
-        // Hiển thị tên chủ đề
         tvTopic.setText("📚 Chủ đề: " + topicId);
 
-        // Khởi tạo TextToSpeech
+        // TTS
         tts = new TextToSpeech(this, status -> {
             if (status == TextToSpeech.SUCCESS) {
-                int result = tts.setLanguage(Locale.US);
-                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                    Toast.makeText(this, "❌ Ngôn ngữ không được hỗ trợ hoặc thiếu dữ liệu!", Toast.LENGTH_LONG).show();
-                }
-            } else {
-                Toast.makeText(this, "❌ Không thể khởi tạo Text-to-Speech!", Toast.LENGTH_LONG).show();
+                tts.setLanguage(Locale.US);
             }
         });
 
-        // Tải danh sách từ vựng từ Firebase
+        // Load dữ liệu từ Firebase
         DatabaseReference wordsRef = FirebaseDatabase.getInstance().getReference("vocabulary");
         wordsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -70,8 +64,7 @@ public class WordStudyActivity extends AppCompatActivity {
                 wordList.clear();
                 for (DataSnapshot child : snapshot.getChildren()) {
                     Word word = child.getValue(Word.class);
-                    if (word != null && word.getTopic() != null &&
-                            word.getTopic().trim().equalsIgnoreCase(topicId.trim())) {
+                    if (word != null && topicId.equalsIgnoreCase(word.getTopic())) {
                         wordList.add(word);
                     }
                 }
@@ -86,29 +79,24 @@ public class WordStudyActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(WordStudyActivity.this, "Lỗi tải dữ liệu từ Firebase", Toast.LENGTH_SHORT).show();
+                Toast.makeText(WordStudyActivity.this, "Lỗi Firebase!", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Nút phát âm
         btnSpeak.setOnClickListener(v -> {
             if (!wordList.isEmpty()) {
-                String wordText = wordList.get(currentIndex).getWord();
-                if (tts != null && !wordText.isEmpty()) {
-                    tts.speak(wordText, TextToSpeech.QUEUE_FLUSH, null, null);
-                } else {
-                    Toast.makeText(this, "❌ Không thể phát âm!", Toast.LENGTH_SHORT).show();
-                }
+                String text = wordList.get(currentIndex).getWord();
+                tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
             }
         });
 
-        // Nút từ tiếp theo
         btnNext.setOnClickListener(v -> {
             if (currentIndex < wordList.size() - 1) {
                 currentIndex++;
                 showWord(currentIndex);
             } else {
                 Toast.makeText(this, "🎉 Bạn đã học hết từ trong chủ đề!", Toast.LENGTH_SHORT).show();
+                updateProgressOncePerTopic();
             }
         });
     }
@@ -120,6 +108,63 @@ public class WordStudyActivity extends AppCompatActivity {
         tvMeaning.setText("📝 Nghĩa: " + w.getMeaning());
         tvExample.setText("💬 Ví dụ: " + w.getExample());
         tvProgress.setText("Từ " + (index + 1) + " / " + wordList.size());
+    }
+
+    private void updateProgressOncePerTopic() {
+        SharedPreferences prefs = getSharedPreferences("user_info", MODE_PRIVATE);
+        String userKey = prefs.getString("userKey", null);
+
+        if (userKey == null) {
+            Toast.makeText(this, "Không tìm thấy người dùng!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        DatabaseReference progressRef = FirebaseDatabase.getInstance()
+                .getReference("users")
+                .child(userKey)
+                .child("progress");
+
+        progressRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int topicsLearned = 0;
+                int quizzesCompleted = 0;
+                double averageScore = 0;
+                int overallProgress;
+
+                boolean alreadyLearned = snapshot.child("learnedTopics").hasChild(topicId);
+
+                if (alreadyLearned) {
+                    Toast.makeText(WordStudyActivity.this, "🎓 Chủ đề này đã được tính trước đó!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (snapshot.child("topicsLearned").exists()) {
+                    topicsLearned = snapshot.child("topicsLearned").getValue(Integer.class);
+                }
+                if (snapshot.child("quizzesCompleted").exists()) {
+                    quizzesCompleted = snapshot.child("quizzesCompleted").getValue(Integer.class);
+                }
+                if (snapshot.child("averageScore").exists()) {
+                    averageScore = snapshot.child("averageScore").getValue(Double.class);
+                }
+
+                topicsLearned++;
+                overallProgress = (int) ((topicsLearned * 10 + quizzesCompleted * 10 + averageScore) / 3);
+
+                // Cập nhật dữ liệu
+                progressRef.child("topicsLearned").setValue(topicsLearned);
+                progressRef.child("overallProgress").setValue(overallProgress);
+                progressRef.child("learnedTopics").child(topicId).setValue(true); // đánh dấu chủ đề đã học
+
+                Toast.makeText(WordStudyActivity.this, "✅ Đã cập nhật tiến độ!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(WordStudyActivity.this, "❌ Lỗi khi cập nhật tiến độ", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

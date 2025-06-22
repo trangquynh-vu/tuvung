@@ -1,5 +1,6 @@
 package vn.edu.tlu.btln9.tuvung;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
@@ -7,19 +8,22 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
 import com.google.firebase.database.ValueEventListener;
 
 public class ProgressActivity extends AppCompatActivity {
 
     private TextView tvTopicsLearned, tvQuizzesCompleted, tvAverageScore, tvOverallProgress;
-    private ProgressBar progressBarOverall;
-    private Button btnContinueLearning;
+    private ProgressBar progressBar;
+    private Button btnBack;
+
     private DatabaseReference usersRef;
 
     @Override
@@ -27,66 +31,68 @@ public class ProgressActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress);
 
-        // Ánh xạ
+        // Lấy userId từ SharedPreferences
+        SharedPreferences prefs = getSharedPreferences("user_info", MODE_PRIVATE);
+       // int userId = prefs.getInt("userId", -1);
+
+      //  if (userId == -1) {
+       //     Toast.makeText(this, "Không tìm thấy người dùng!", Toast.LENGTH_SHORT).show();
+        //    finish();
+        //    return;
+       // }
+        String userKey = prefs.getString("userKey", null);
+
+        if (userKey == null) {
+            Toast.makeText(this, "Không tìm thấy người dùng!", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        // Ánh xạ các view
         tvTopicsLearned = findViewById(R.id.tvTopicsLearned);
         tvQuizzesCompleted = findViewById(R.id.tvQuizzesCompleted);
         tvAverageScore = findViewById(R.id.tvAverageScore);
         tvOverallProgress = findViewById(R.id.tvOverallProgress);
-        progressBarOverall = findViewById(R.id.progressBarOverall);
-        btnContinueLearning = findViewById(R.id.btnContinueLearning);
+        progressBar = findViewById(R.id.progressBar);
+        btnBack = findViewById(R.id.btnBack);
 
-        // Tham chiếu tới bảng "users"
+        // Firebase Database Reference
         usersRef = FirebaseDatabase.getInstance().getReference("users");
 
-        // Lấy userId từ SharedPreferences
-        SharedPreferences prefs = getSharedPreferences("user_info", MODE_PRIVATE);
-        int userId = prefs.getInt("userId", -1);
+        // Truy cập vào user theo userId (giả sử userId là key của mỗi user)
+        //usersRef.child(String.valueOf(userId)).child("progress")
+        usersRef.child(userKey).child("progress")
 
-        if (userId == -1) {
-            Toast.makeText(this, "Không tìm thấy thông tin người dùng", Toast.LENGTH_SHORT).show();
-            return;
-        }
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            Progress progress = snapshot.getValue(Progress.class);
 
-        // Tìm user có userId tương ứng và lấy dữ liệu progress
-        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                boolean found = false;
-
-                for (DataSnapshot userSnap : snapshot.getChildren()) {
-                    Long dbUserId = userSnap.child("userId").getValue(Long.class);
-                    if (dbUserId != null && dbUserId == userId) {
-                        found = true;
-                        DataSnapshot progressSnap = userSnap.child("progress");
-
-                        int topicsLearned = progressSnap.child("topicsLearned").getValue(Integer.class);
-                        int quizzesCompleted = progressSnap.child("quizzesCompleted").getValue(Integer.class);
-                        double averageScore = progressSnap.child("averageScore").getValue(Double.class);
-                        int overallProgress = progressSnap.child("overallProgress").getValue(Integer.class);
-
-                        tvTopicsLearned.setText("Chủ đề đã học: " + topicsLearned + "/10");
-                        tvQuizzesCompleted.setText("Quiz hoàn thành: " + quizzesCompleted);
-                        tvAverageScore.setText("Điểm trung bình: " + averageScore);
-                        tvOverallProgress.setText(overallProgress + "% đã hoàn thành");
-                        progressBarOverall.setProgress(overallProgress);
-                        break;
+                            if (progress != null) {
+                                tvTopicsLearned.setText("Chủ đề đã học: " + progress.getTopicsLearned());
+                                tvQuizzesCompleted.setText("Bài kiểm tra đã hoàn thành: " + progress.getQuizzesCompleted());
+                                tvAverageScore.setText("Điểm trung bình: " + progress.getAverageScore());
+                                tvOverallProgress.setText("Tiến độ tổng thể: " + progress.getOverallProgress() + "%");
+                                progressBar.setProgress(progress.getOverallProgress());
+                            }
+                        } else {
+                            Toast.makeText(ProgressActivity.this, "Chưa có dữ liệu tiến độ!", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }
 
-                if (!found) {
-                    Toast.makeText(ProgressActivity.this, "Không tìm thấy tiến độ người dùng", Toast.LENGTH_SHORT).show();
-                }
-            }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(ProgressActivity.this, "Lỗi khi tải dữ liệu!", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                Toast.makeText(ProgressActivity.this, "Lỗi: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        btnContinueLearning.setOnClickListener(v -> {
-            Toast.makeText(this, "Tiếp tục học nào!", Toast.LENGTH_SHORT).show();
-            // startActivity(new Intent(this, TopicListActivity.class));
+        // Quay lại MainUserActivity
+        btnBack.setOnClickListener(v -> {
+            Intent intent = new Intent(ProgressActivity.this, MainUserActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
         });
     }
 }
