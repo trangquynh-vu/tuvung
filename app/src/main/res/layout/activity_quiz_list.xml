@@ -1,23 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/background_light"
+    android:fitsSystemWindows="true">
 
-    <!-- Tiêu đề -->
+    <!-- 🔙 Thanh công cụ có nút quay lại -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/button_yellow_light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:title="Chọn chủ đề quiz"
+        app:titleTextColor="@color/black"
+        app:navigationIcon="@drawable/ic_back" />
+
+    <!-- 📝 Tiêu đề -->
     <TextView
         android:id="@+id/tvTitle"
-        android:text="📋 Quiz Topic Selection"
-        android:textSize="22sp"
-        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:paddingBottom="12dp" />
+        android:text="📋 Danh sách chủ đề"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_gravity="center_horizontal" />
 
-    <!-- ✅ ListView chiếm phần còn lại của màn hình -->
+    <!-- 📚 Danh sách chủ đề quiz -->
     <ListView
         android:id="@+id/listViewTopics"
         android:layout_width="match_parent"
@@ -26,15 +41,14 @@
         android:divider="@android:color/darker_gray"
         android:dividerHeight="1dp" />
 
-    <!-- Nút xem lịch sử -->
+    <!-- 📜 Nút xem lịch sử quiz -->
     <Button
         android:id="@+id/btnViewHistory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="📜 Xem lịch sử quiz"
-        android:backgroundTint="@color/bg_quiz"
+        android:text="📜 Xem lịch sử làm bài"
+        android:backgroundTint="@color/button_yellow_light"
         android:textColor="@color/black"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp" />
-
 </LinearLayout>

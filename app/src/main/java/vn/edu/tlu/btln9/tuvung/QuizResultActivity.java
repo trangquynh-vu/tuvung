@@ -17,8 +17,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.UUID;
+import java.util.Locale;
 
 public class QuizResultActivity extends AppCompatActivity {
 
@@ -39,14 +41,16 @@ public class QuizResultActivity extends AppCompatActivity {
         tvTopic.setText("Kết quả quiz: " + (topicTitle != null ? topicTitle : ""));
         tvResult.setText("Bạn trả lời đúng " + score + "/" + total + " câu hỏi.");
 
-        // Lưu lịch sử quiz và cập nhật tiến độ
+        // ✅ Lưu quiz history và cập nhật tiến độ học
         saveQuizHistoryAndProgress(topicTitle, score, total);
 
-        // Nút xem lịch sử
-        Button btnViewHistory = findViewById(R.id.btnViewHistory);
-        btnViewHistory.setOnClickListener(v -> {
-            Intent intent = new Intent(QuizResultActivity.this, QuizHistoryActivity.class);
+        // ✅ Nút quay lại QuizListActivity
+        Button btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> {
+            Intent intent = new Intent(QuizResultActivity.this, QuizListActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
+            finish();
         });
     }
 
@@ -61,16 +65,21 @@ public class QuizResultActivity extends AppCompatActivity {
 
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userKey);
 
-        // 1. Ghi lịch sử quiz
+        // ✅ Ghi quiz history
         DatabaseReference historyRef = userRef.child("quizHistory").push();
         HashMap<String, Object> quizData = new HashMap<>();
         quizData.put("topic", topicTitle);
         quizData.put("score", score);
         quizData.put("total", total);
-        quizData.put("timestamp", System.currentTimeMillis());
+
+        // Thêm thời gian định dạng dễ nhìn
+        String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                .format(new Date());
+        quizData.put("timestamp", timestamp);
+
         historyRef.setValue(quizData);
 
-        // 2. Cập nhật tiến độ học
+        // ✅ Cập nhật tiến độ
         DatabaseReference progressRef = userRef.child("progress");
 
         progressRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -91,12 +100,14 @@ public class QuizResultActivity extends AppCompatActivity {
                     averageScore = snapshot.child("averageScore").getValue(Double.class);
                 }
 
-                // Tính lại điểm trung bình
-                double newAverage = ((averageScore * quizzesCompleted) + score * 100.0 / total) / (quizzesCompleted + 1);
+                // ✅ Cập nhật số quiz, tính điểm trung bình mới
                 quizzesCompleted++;
+                double quizScorePercent = score * 100.0 / total;
+                double newAverage = ((averageScore * (quizzesCompleted - 1)) + quizScorePercent) / quizzesCompleted;
+
                 overallProgress = (int) ((topicsLearned * 10 + quizzesCompleted * 10 + newAverage) / 3);
 
-                // Cập nhật dữ liệu mới
+                // ✅ Ghi lại
                 progressRef.child("quizzesCompleted").setValue(quizzesCompleted);
                 progressRef.child("averageScore").setValue(newAverage);
                 progressRef.child("overallProgress").setValue(overallProgress);

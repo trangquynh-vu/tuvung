@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:fitsSystemWindows="true"
     android:padding="24dp">
 
     <TextView
@@ -23,9 +24,16 @@
         android:textSize="20sp" />
 
     <Button
-        android:id="@+id/btnViewHistory"
-        android:layout_width="match_parent"
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="📜 Xem lịch sử quiz"
-        android:layout_marginTop="24dp" />
+        android:text="🔙 Thoát"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/button_yellow_light"
+        android:layout_marginTop="24dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:elevation="4dp" />
 </LinearLayout>

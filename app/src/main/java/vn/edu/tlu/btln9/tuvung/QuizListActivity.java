@@ -7,7 +7,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.database.*;
 
@@ -26,7 +28,12 @@ public class QuizListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_list);
 
-        // Ánh xạ view
+        // ✅ Gắn toolbar có nút quay lại
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(v -> finish());
+
+        // Ánh xạ các view
         listViewTopics = findViewById(R.id.listViewTopics);
         btnViewHistory = findViewById(R.id.btnViewHistory);
 
@@ -38,7 +45,7 @@ public class QuizListActivity extends AppCompatActivity {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("topic").child("topics");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 topicList.clear();
                 topicTitles.clear();
 
@@ -46,7 +53,7 @@ public class QuizListActivity extends AppCompatActivity {
                     Topic topic = child.getValue(Topic.class);
                     if (topic != null) {
                         topicList.add(topic);
-                        topicTitles.add(topic.getTitle());
+                        topicTitles.add("📘 " + topic.getTitle());
                     }
                 }
 
@@ -54,7 +61,7 @@ public class QuizListActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(QuizListActivity.this, "Lỗi khi tải chủ đề", Toast.LENGTH_SHORT).show();
             }
         });

@@ -1,8 +1,10 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background_light"
     android:padding="24dp"
+    android:fitsSystemWindows="true"
     android:descendantFocusability="afterDescendants"
     android:focusableInTouchMode="true">
 
@@ -14,6 +16,18 @@
         android:descendantFocusability="afterDescendants"
         android:focusable="true"
         android:focusableInTouchMode="true">
+
+        <!-- ✅ Toolbar có nút quay lại -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/button_yellow_light"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="Chọn chủ đề"
+            app:titleTextColor="@android:color/black"
+            app:navigationIcon="@drawable/ic_back" />
+
 
         <!-- Chủ đề -->
         <TextView
@@ -77,17 +91,30 @@
             android:backgroundTint="@color/button_yellow_light"
             android:textColor="@color/black"
             android:layout_marginBottom="20dp" />
-
-        <!-- Nút từ tiếp theo -->
-        <Button
-            android:id="@+id/btnNext"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="➡️ Từ tiếp theo"
-            android:backgroundTint="@color/button_yellow_light"
-            android:textColor="@color/black"
-            android:clickable="true"
-            android:focusable="true" />
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/btnPrevious"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⬅️ Trước "
+                android:backgroundTint="@color/button_yellow_light"
+                android:textColor="@color/black"
+                android:layout_marginEnd="12dp"/>
+
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="➡️ Tiếp theo "
+                android:backgroundTint="@color/button_yellow_light"
+                android:textColor="@color/black" />
+        </LinearLayout>
 
         <!-- Progress -->
         <TextView

@@ -10,11 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.*;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -22,7 +18,7 @@ import java.util.Locale;
 public class WordStudyActivity extends AppCompatActivity {
 
     private TextView tvTopic, tvWord, tvPronounce, tvMeaning, tvExample, tvProgress;
-    private Button btnSpeak, btnNext;
+    private Button btnSpeak, btnNext, btnPrevious;
 
     private ArrayList<Word> wordList = new ArrayList<>();
     private int currentIndex = 0;
@@ -35,9 +31,15 @@ public class WordStudyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_word_study);
 
+        // ✅ Cấu hình Toolbar
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(v -> finish()); // Quay lại màn trước
+
+        // ✅ Lấy topicId từ Intent
         topicId = getIntent().getStringExtra("topicId");
 
-        // Ánh xạ view
+        // ✅ Ánh xạ View
         tvTopic = findViewById(R.id.tvTopic);
         tvWord = findViewById(R.id.tvWord);
         tvPronounce = findViewById(R.id.tvPronounce);
@@ -46,17 +48,18 @@ public class WordStudyActivity extends AppCompatActivity {
         tvProgress = findViewById(R.id.tvProgress);
         btnSpeak = findViewById(R.id.btnSpeak);
         btnNext = findViewById(R.id.btnNext);
+        btnPrevious = findViewById(R.id.btnPrevious);
 
         tvTopic.setText("📚 Chủ đề: " + topicId);
 
-        // TTS
+        // ✅ Khởi tạo Text-to-Speech
         tts = new TextToSpeech(this, status -> {
             if (status == TextToSpeech.SUCCESS) {
                 tts.setLanguage(Locale.US);
             }
         });
 
-        // Load dữ liệu từ Firebase
+        // ✅ Lấy dữ liệu từ Firebase
         DatabaseReference wordsRef = FirebaseDatabase.getInstance().getReference("vocabulary");
         wordsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -83,6 +86,7 @@ public class WordStudyActivity extends AppCompatActivity {
             }
         });
 
+        // ✅ Phát âm
         btnSpeak.setOnClickListener(v -> {
             if (!wordList.isEmpty()) {
                 String text = wordList.get(currentIndex).getWord();
@@ -90,6 +94,7 @@ public class WordStudyActivity extends AppCompatActivity {
             }
         });
 
+        // ✅ Từ tiếp theo
         btnNext.setOnClickListener(v -> {
             if (currentIndex < wordList.size() - 1) {
                 currentIndex++;
@@ -99,8 +104,19 @@ public class WordStudyActivity extends AppCompatActivity {
                 updateProgressOncePerTopic();
             }
         });
+
+        // ✅ Từ trước
+        btnPrevious.setOnClickListener(v -> {
+            if (currentIndex > 0) {
+                currentIndex--;
+                showWord(currentIndex);
+            } else {
+                Toast.makeText(this, "📌 Đây là từ đầu tiên!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
+    // ✅ Hiển thị từ vựng theo chỉ số
     private void showWord(int index) {
         Word w = wordList.get(index);
         tvWord.setText(w.getWord());
@@ -110,6 +126,7 @@ public class WordStudyActivity extends AppCompatActivity {
         tvProgress.setText("Từ " + (index + 1) + " / " + wordList.size());
     }
 
+    // ✅ Cập nhật tiến độ học (chỉ một lần mỗi chủ đề)
     private void updateProgressOncePerTopic() {
         SharedPreferences prefs = getSharedPreferences("user_info", MODE_PRIVATE);
         String userKey = prefs.getString("userKey", null);
@@ -152,7 +169,7 @@ public class WordStudyActivity extends AppCompatActivity {
                 topicsLearned++;
                 overallProgress = (int) ((topicsLearned * 10 + quizzesCompleted * 10 + averageScore) / 3);
 
-                // Cập nhật dữ liệu
+                // ✅ Cập nhật dữ liệu mới
                 progressRef.child("topicsLearned").setValue(topicsLearned);
                 progressRef.child("overallProgress").setValue(overallProgress);
                 progressRef.child("learnedTopics").child(topicId).setValue(true); // đánh dấu chủ đề đã học
@@ -167,6 +184,7 @@ public class WordStudyActivity extends AppCompatActivity {
         });
     }
 
+    // ✅ Tắt Text-to-Speech khi thoát
     @Override
     protected void onDestroy() {
         if (tts != null) {

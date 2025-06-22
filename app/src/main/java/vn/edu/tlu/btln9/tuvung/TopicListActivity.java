@@ -31,6 +31,11 @@ public class TopicListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_list);
 
+        // ✅ Cấu hình Toolbar
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(v -> finish()); // Quay lại màn trước
+
         lvTopics = findViewById(R.id.lvTopics);
 
         // Adapter để hiển thị tiêu đề chủ đề

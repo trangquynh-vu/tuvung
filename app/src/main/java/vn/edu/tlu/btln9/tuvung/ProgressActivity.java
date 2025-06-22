@@ -18,6 +18,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Locale;
+
 public class ProgressActivity extends AppCompatActivity {
 
     private TextView tvTopicsLearned, tvQuizzesCompleted, tvAverageScore, tvOverallProgress;
@@ -72,7 +74,7 @@ public class ProgressActivity extends AppCompatActivity {
                             if (progress != null) {
                                 tvTopicsLearned.setText("Chủ đề đã học: " + progress.getTopicsLearned());
                                 tvQuizzesCompleted.setText("Bài kiểm tra đã hoàn thành: " + progress.getQuizzesCompleted());
-                                tvAverageScore.setText("Điểm trung bình: " + progress.getAverageScore());
+                                tvAverageScore.setText("Điểm trung bình: " + String.format(Locale.US, "%.2f", progress.getAverageScore()));
                                 tvOverallProgress.setText("Tiến độ tổng thể: " + progress.getOverallProgress() + "%");
                                 progressBar.setProgress(progress.getOverallProgress());
                             }

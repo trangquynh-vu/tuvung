@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="#FAFAFA">
+    android:fitsSystemWindows="true"
+    android:background="@color/background_light">
 
-    <!-- Tiêu đề -->
+    <!-- 🔙 Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/button_yellow_light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:title="📚 Lịch sử làm Quiz"
+        app:titleTextColor="@color/black"
+        app:navigationIcon="@drawable/ic_back" />
+
+    <!-- Tiêu đề phụ -->
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="📚 Lịch sử làm Quiz"
-        android:textSize="22sp"
+        android:text="📝 Danh sách các bài đã làm"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="#333333"
-        android:layout_alignParentTop="true"
+        android:textColor="@color/black"
+        android:layout_below="@id/toolbar"
         android:layout_centerHorizontal="true"
-        android:paddingBottom="12dp"/>
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="4dp" />
 
-    <!-- Progress bar khi tải -->
+    <!-- Progress bar khi tải dữ liệu -->
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleLarge"
@@ -28,14 +41,14 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
-    <!-- Thông báo khi không có dữ liệu -->
+    <!-- Thông báo không có dữ liệu -->
     <TextView
         android:id="@+id/tvEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Chưa có kết quả quiz nào."
         android:textSize="16sp"
-        android:textColor="#777777"
+        android:textColor="@color/gray_dark"
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
@@ -43,10 +56,9 @@
     <ListView
         android:id="@+id/lvHistory"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_below="@id/tvTitle"
-        android:layout_alignParentBottom="true"
-        android:divider="#CCCCCC"
-        android:dividerHeight="1dp"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="4dp"
+        android:divider="@color/gray_dark"
+        android:dividerHeight="1dp" />
 </RelativeLayout>

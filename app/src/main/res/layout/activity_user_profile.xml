@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_light"
+    android:padding="24dp"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- 🟦 Logo ứng dụng -->
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/logo"
+            android:contentDescription="Logo"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 🟦 Tiêu đề -->
+        <TextView
+            android:id="@+id/tvProfileTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="👤 Hồ sơ người dùng"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 🟦 Email -->
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email: "
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="8dp" />
+
+        <!-- 🟦 Vai trò -->
+        <TextView
+            android:id="@+id/tvRole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vai trò: "
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="8dp" />
+
+        <!-- 🟦 Tiến độ tổng thể -->
+        <TextView
+            android:id="@+id/tvOverallProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tiến độ tổng thể: 0%"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 🟦 Nút xem tiến độ -->
+        <Button
+            android:id="@+id/btnProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📈 Xem tiến độ chi tiết"
+            android:backgroundTint="@color/bg_quiz"
+            android:textColor="@color/black"
+            android:layout_marginBottom="24dp" />
+
+        <!-- 🟦 Nút Đăng xuất -->
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Đăng xuất"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/button_yellow_light"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:elevation="4dp"
+            android:layout_marginBottom="32dp" />
+
+        <!-- 🟦 Mô tả dưới cùng -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="✨ Ứng dụng 3T Learn giúp bạn học từ vựng và luyện tập quiz theo từng chủ đề một cách hiệu quả."
+            android:textSize="13sp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp" />
+
+    </LinearLayout>
+</ScrollView>

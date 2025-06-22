@@ -41,6 +41,7 @@
         <activity android:name=".QuizActivity" />
         <activity android:name=".QuizResultActivity" />
         <activity android:name=".QuizHistoryActivity" />
+        <activity android:name=".UserProfileActivity" />
 
 
     </application>
