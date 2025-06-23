@@ -1,40 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:fitsSystemWindows="true"
-    android:background="@color/background_light">
+    android:background="@color/white">
 
-    <!-- ✅ Toolbar có nút quay lại -->
+    <!-- ✅ Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/button_yellow_light"
-        app:title="📚 Quản lý Chủ đề"
+        app:title="📚 Quản lý Từ vựng"
         app:titleTextColor="@android:color/black"
         app:navigationIcon="@drawable/ic_back" />
 
-    <!-- ✅ Nút thêm chủ đề -->
-    <Button
-        android:id="@+id/btnAddTopic"
+    <!-- ✅ Spinner chủ đề -->
+    <Spinner
+        android:id="@+id/spinnerTopic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="➕ Thêm Chủ đề"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp"
-        android:backgroundTint="@color/button_yellow_light"
-        android:textColor="@android:color/black" />
+        android:minHeight="48dp"
+        android:paddingVertical="12dp"
+        android:layout_marginTop="16dp" />
 
-    <!-- ✅ Danh sách chủ đề -->
+    <!-- ✅ Nút thêm -->
+    <Button
+        android:id="@+id/btnAddVocabulary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:text="➕ Thêm từ vựng"
+        android:textSize="16sp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/button_yellow_light"
+        android:textColor="@color/black" />
+
+    <!-- ✅ Danh sách từ vựng -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerTopics"
+        android:id="@+id/recyclerViewVocabulary"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@android:color/white" />
+        android:layout_marginTop="12dp" />
+
 </LinearLayout>

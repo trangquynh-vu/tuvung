@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class AdminDashboardActivity extends AppCompatActivity {
 
-    private Button btnManageUsers, btnManageTopics, btnLogout;
+    private Button btnManageUsers, btnManageTopics, btnManageVocabulary, btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +21,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
         // Ánh xạ các nút từ XML
         btnManageUsers = findViewById(R.id.btnManageUsers);
         btnManageTopics = findViewById(R.id.btnManageTopics);
+        btnManageVocabulary = findViewById(R.id.btnManageVocabulary);
         btnLogout = findViewById(R.id.btnLogout);
 
         // Sự kiện nút "Quản lý người dùng"
@@ -32,6 +33,11 @@ public class AdminDashboardActivity extends AppCompatActivity {
         // Sự kiện nút "Quản lý chủ đề"
         btnManageTopics.setOnClickListener(v -> {
             Intent intent = new Intent(this, ManageTopicsActivity.class);
+            startActivity(intent);
+        });
+        // Sự kiện nút "Quản lý tu vung"
+        btnManageVocabulary.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ManageVocabularyActivity.class);
             startActivity(intent);
         });
 

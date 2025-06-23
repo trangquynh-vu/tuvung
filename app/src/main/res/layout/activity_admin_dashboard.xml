@@ -56,12 +56,24 @@
             android:paddingVertical="14dp"
             android:elevation="3dp" />
 
-        <!-- Nút quản lý chủ đề -->
+        <!-- Nút quản lý tu vung -->
         <Button
             android:id="@+id/btnManageVocabulary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="📚 Quản lý từ vựng"
+            android:backgroundTint="@color/button_yellow_light"
+            android:textColor="@color/black"
+            android:layout_marginBottom="16dp"
+            android:paddingVertical="14dp"
+            android:elevation="3dp" />
+
+        <!-- Nút quản lý quizz -->
+        <Button
+            android:id="@+id/btnManageQuizz"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📚 Quản lý Quizz"
             android:backgroundTint="@color/button_yellow_light"
             android:textColor="@color/black"
             android:layout_marginBottom="16dp"

@@ -26,14 +26,16 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        // Ánh xạ giao diện
         edtEmail = findViewById(R.id.edtEmail);
         edtPassword = findViewById(R.id.edtPassword);
         btnRegister = findViewById(R.id.btnRegister);
         btnGoLogin = findViewById(R.id.btnGoLogin);
 
-        // Trỏ đến nút "users" trong Realtime Database
+        // Kết nối đến Firebase Realtime Database, bảng "users"
         usersRef = FirebaseDatabase.getInstance().getReference("users");
 
+        // Xử lý nút Đăng ký
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        // Chuyển về màn hình đăng nhập
         btnGoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,15 +67,20 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // Tạo một ID mới cho người dùng
+        // Tạo userId bằng push().getKey()
         String userId = usersRef.push().getKey();
         if (userId == null) {
-            Toast.makeText(this, "Lỗi hệ thống!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Lỗi hệ thống khi tạo ID người dùng", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Tạo đối tượng người dùng và lưu vào Firebase
-        User user = new User(email, password);
+        // Gán role mặc định là "user"
+        String role = "user";
+
+        // Tạo đối tượng người dùng đầy đủ
+        User user = new User(userId, email, password, role);
+
+        // Lưu vào Firebase
         usersRef.child(userId).setValue(user)
                 .addOnSuccessListener(unused -> {
                     Toast.makeText(this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
