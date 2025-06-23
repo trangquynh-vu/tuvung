@@ -47,6 +47,8 @@
         <activity android:name=".AddEditTopicActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ManageVocabularyActivity" />
+        <activity android:name=".ManageQuizzActivity" />
+
 
 
 

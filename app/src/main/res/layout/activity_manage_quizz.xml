@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- Thanh công cụ -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/button_yellow_light"
+        app:title="📋 Quản lý Câu hỏi Quiz"
+        app:titleTextColor="@android:color/black"
+        app:navigationIcon="@drawable/ic_back" />
+
+    <!-- Spinner chọn chủ đề (đã fix touch target) -->
+    <Spinner
+        android:id="@+id/spinnerTopic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="8dp"
+        android:spinnerMode="dropdown" />
+
+    <!-- Nút thêm câu hỏi -->
+    <Button
+        android:id="@+id/btnAddQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:text="➕ Thêm câu hỏi mới"
+        android:backgroundTint="@color/button_yellow_light"
+        android:textColor="@color/black"
+        android:layout_marginVertical="8dp" />
+
+    <!-- Danh sách câu hỏi hiển thị bằng RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewQuiz"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="4dp" />
+
+</LinearLayout>
